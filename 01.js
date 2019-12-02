@@ -13,8 +13,22 @@ rl.on('close', (line) => compute(lines))
 
 function compute(modules) {
     let fuelSum = 0
-    modules.forEach(mass => {
-        fuelSum += Math.floor(mass/3) - 2
-    })
+
+    for (let i = 0; i < modules.length; i++) {
+        let fuel = fuelReq(modules[i])
+        fuelSum += fuel
+        let more = fuelReq(fuel)
+        more > 0 ? modules.push(fuel) : null
+    }
     console.log('Fuel Required: ', fuelSum)
+}
+
+function fuelReq(mass) {
+    let fuel = Math.floor(mass/3) - 2
+    
+    if (fuel > 0) {
+        return fuel
+    } else {
+        return 0
+    }
 }
